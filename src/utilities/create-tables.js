@@ -14,6 +14,17 @@ const query = `
             created_at TIMESTAMPTZ DEFAULT NOW(),
             updated_at TIMESTAMPTZ DEFAULT NOW()
         );
+
+    --DROP TABLE IF EXISTS reviews;
+    CREATE TABLE IF NOT EXISTS
+        reviews(
+            review_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+            comment VARCHAR (100) NOT NULL,
+            rate INTEGER NOT NULL CHECK(rate <= 5),
+            product_id INTEGER NOT NULL REFERENCES products(product_id) ON DELETE CASCADE,
+            created_at TIMESTAMPTZ DEFAULT NOW(),
+            updated_at TIMESTAMPTZ DEFAULT NOW()
+        );  
 `
 
 const createTables = async () => {
